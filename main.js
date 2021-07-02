@@ -1,4 +1,4 @@
-let clicks = 0;
+let clicks = 1;
 
 const TIMEOUT = 5000;
 
