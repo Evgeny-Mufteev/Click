@@ -7,6 +7,7 @@ const button = document.querySelector('#button');
 const counter = document.querySelector('#counter');
  
 let objPhrases = {
+    0: "Так не работает!",
     10: "Ужасно!",
     20: "Плохо!",
     30: "Не плохо!",
