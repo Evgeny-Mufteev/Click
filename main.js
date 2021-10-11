@@ -5,6 +5,14 @@ const TIMEOUT = 5000;
 const display = document.querySelector('#display');
 const button = document.querySelector('#button');
 const counter = document.querySelector('#counter');
+ 
+let objPhrases = {
+    10: "Ужасно!",
+    20: "Плохо!",
+    30: "Не плохо!",
+    40: "Приемлимо!",
+    50: "Нормально"
+}
 
 button.onclick = start;
 
@@ -21,13 +29,20 @@ function start() {
 
     const timeout = setTimeout(() => {
         button.onclick = null;
-        display.textContent = 'Время вышло, игра окончена. Даже 33 не набрал?';
 
+        let cryPhrase = '';
+        for (let key in objPhrases) {
+            
+            if(clicks >= key)
+               cryPhrase = objPhrases[key];
+
+        }
+        display.textContent = cryPhrase;
         clearInterval(interval)
         clearTimeout(timeout);
     }, TIMEOUT);
 };
-
+ 
 
 // Уже лишнее, но решили усложнить
 function formatTime(ms) {
