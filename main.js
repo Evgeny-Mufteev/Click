@@ -5,7 +5,7 @@ const TIMEOUT = 5000;
 const display = document.querySelector('#display');
 const button = document.querySelector('#button');
 const counter = document.querySelector('#counter');
-
+ 
 let objPhrases = {
     10: "Ужасно!",
     20: "Плохо!",
