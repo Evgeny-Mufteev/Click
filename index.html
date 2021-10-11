@@ -7,14 +7,31 @@
     </head>
 
     <body>
+        <header class="header">
+            <div class="raiting">
+                <span class="raiting__title">
+                    Рейтинг
+                </span>
+                <ol class="raiting__list raiting__list_js">
+
+                </ol>
+            </div>
+        </header>
         <main>
             <div id="display"></div>
-
             <button id="button" class="btn">Клик</button>
             <div id="counter"></div>
-            <button class="btn restart" onclick='window.location.reload(true)'>Начать заново</button>
+            <button class="btn restart restart_js" onclick='window.location.reload(true)'>Начать заново</button>
         </main>
 
+        <div class="input-name-form input-name-form_js">
+            <div class="cryPhrase_js"></div>
+            <span class="input-name-form__title">Введите свое имя</span>
+            <div class="input-name-form__menu">
+                <input class="btn input-name-form__input input-name-form__input_js" type="text">
+                <input class="btn input-name-form__submit input-name-form__submit_js" type="submit">
+            </div>
+        </div>
 
         <script src="main.js"></script>
     </body>
