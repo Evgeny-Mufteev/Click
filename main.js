@@ -19,6 +19,8 @@ button.onclick = start;
 
 function start() {
     const startTime = Date.now();
+ 
+    counter.textContent = clicks;
 
     display.textContent = formatTime(TIMEOUT);
     button.onclick = () => counter.textContent = ++clicks;
