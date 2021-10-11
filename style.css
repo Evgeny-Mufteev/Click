@@ -100,3 +100,48 @@ main {
 .restart {
     height: 50px;
 }
+
+
+/*============================== Trauvel Styles =================================*/
+
+body{
+    flex-direction: column;
+    position: relative;
+}
+
+.header{
+    width: 100%;
+}
+
+.raiting{
+    text-align: center;
+}
+
+.raiting__title{
+    margin: 0 auto;
+}
+
+.raiting__list{
+    width: max-content;
+    margin: 0 auto;
+}
+
+.input-name-form{
+    display: flex;
+    flex-direction: column;
+    background: #b31d1d;
+    width: max-content;
+    height: max-content;
+    text-align: center;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    display: none;
+}
+
+.input-name-form__menu{
+    display: flex;
+    flex-direction: column;
+}
+
+/*============================== End Trauvel Styles =============================*/
