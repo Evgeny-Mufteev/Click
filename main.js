@@ -53,7 +53,11 @@ function start() {
         document.querySelector(".input-name-form_js").style.display = "block";
         document.querySelector(".input-name-form__submit_js").addEventListener("click", function(){
             if(Name.value){
-                localStorage.setItem("recordTable", localStorage.getItem("recordTable")+`^${Name.value}&${clicks}`);
+                if(localStorage.getItem("recordTable")){
+                    localStorage.setItem("recordTable", localStorage.getItem("recordTable")+`^${Name.value}&${clicks}`);
+                }else{
+                    localStorage.setItem("recordTable", `${Name.value}&${clicks}`);
+                }
             }else{
                 return;
             }
@@ -86,9 +90,11 @@ function recordTablePull(raitingList){
             arr[i] = el.split("&");
         });
 
+        recordTable = checkRecordTable(recordTable);
+
         let j = 0;
         while (j<3){
-            let max = 0, maxI = null;
+            let max = 0, maxI = 0;
             recordTable.forEach((el, i) => {
                 if(el[1]>max){
                     max = el[1];
@@ -96,23 +102,45 @@ function recordTablePull(raitingList){
                 }
             });
 
-            let LeaderName = `${recordTable[maxI][0]} ${recordTable[maxI][1]} очк.`
+            let LeaderName = `${recordTable[maxI][0]} ${recordTable[maxI][1]} очк.`;
             recordTable[maxI] = 0;
 
             console.log(recordTable);
             console.log(max);
 
-            let li = document.createElement('li'),
-                span = document.createElement('span');
-
-            span.classList.add("raiting__name");
-            span.classList.add("raiting__name_js");
-            span.innerText = LeaderName;
-            li.append(span);
-            raitingList.append(li);
+            addLeaderName(raitingList, LeaderName);
 
             j++;
         }
 
     }
+}
+
+function addLeaderName(raitingList, LeaderName){
+    let li = document.createElement('li'),
+        span = document.createElement('span');
+
+    span.classList.add("raiting__name");
+    span.classList.add("raiting__name_js");
+    span.innerText = LeaderName;
+    li.append(span);
+    raitingList.append(li);
+}
+
+function checkRecordTable(recordTable){
+    let count = recordTable.length,
+        i = 3,
+        arNull = Array('',0);
+
+    if(count>=3) return recordTable;
+
+    count = 3-recordTable.length;
+    while(i>=count){
+
+        recordTable.push(arNull);
+
+        i--;
+    }
+
+    return recordTable;
 }
