@@ -21,7 +21,7 @@ function start() {
     const startTime = Date.now();
 
     display.textContent = formatTime(TIMEOUT);
-    button.onclick = () => counter.textContent = clicks++;
+    button.onclick = () => counter.textContent = ++clicks;
 
     const interval = setInterval(() => {
         const delta  = Date.now() - startTime;
