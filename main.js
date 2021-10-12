@@ -7,7 +7,8 @@ const display = document.querySelector('#display'),
       counter = document.querySelector('#counter'),
       restart = document.querySelector(".restart_js"),
       raitingList = document.querySelector(".raiting__list_js"),
-      cryPhraseBlock = document.querySelector(".cryPhrase_js");
+      cryPhraseBlock = document.querySelector(".cryPhrase_js"),
+      liveHearth = document.querySelector(".live-hearth");
  
 let objPhrases = {
         0: "Так не работает!",
@@ -15,20 +16,34 @@ let objPhrases = {
         20: "Плохо!",
         30: "Не плохо!",
         40: "Приемлимо!",
-        50: "Нормально"
+        50: "Нормально!"
     };
 
 recordTablePull(raitingList);
+checkLives();
+drawLives(liveHearth, checkLives());
 
-button.onclick = start;
+if(checkLives()!=0){
+    button.onclick = start;
+}else{
+    button.innerText = "Посмотреть рекламу!";
+}
+
+
 
 function start() {
+    let audio = document.querySelector("#audioClick_js");
+
     const startTime = Date.now();
  
     counter.textContent = clicks;
 
     display.textContent = formatTime(TIMEOUT);
-    button.onclick = () => counter.textContent = ++clicks;
+    button.onclick = () => {
+        console.log(audio);
+        counter.textContent = ++clicks;
+        audio.play();
+    }
 
     const interval = setInterval(() => {
         const delta  = Date.now() - startTime;
@@ -36,6 +51,10 @@ function start() {
     }, 100);
 
     const timeout = setTimeout(() => {
+        editLives(-1);
+        drawLives(liveHearth, checkLives());
+
+
         button.onclick = null;
 
         let cryPhrase = '';
@@ -53,7 +72,11 @@ function start() {
         document.querySelector(".input-name-form_js").style.display = "block";
         document.querySelector(".input-name-form__submit_js").addEventListener("click", function(){
             if(Name.value){
-                localStorage.setItem("recordTable", localStorage.getItem("recordTable")+`^${Name.value}&${clicks}`);
+                if(localStorage.getItem("recordTable")){
+                    localStorage.setItem("recordTable", localStorage.getItem("recordTable")+`^${Name.value}&${clicks}`);
+                }else{
+                    localStorage.setItem("recordTable", `${Name.value}&${clicks}`);
+                }
             }else{
                 return;
             }
@@ -62,9 +85,6 @@ function start() {
             recordTablePull(raitingList);
         });
         
-
-
-
         clearInterval(interval)
         clearTimeout(timeout);
     }, TIMEOUT);
@@ -86,9 +106,11 @@ function recordTablePull(raitingList){
             arr[i] = el.split("&");
         });
 
+        recordTable = checkRecordTable(recordTable);
+
         let j = 0;
         while (j<3){
-            let max = 0, maxI = null;
+            let max = 0, maxI = 0;
             recordTable.forEach((el, i) => {
                 if(el[1]>max){
                     max = el[1];
@@ -96,23 +118,83 @@ function recordTablePull(raitingList){
                 }
             });
 
-            let LeaderName = `${recordTable[maxI][0]} ${recordTable[maxI][1]} очк.`
+            let LeaderName = `${recordTable[maxI][0]} ${recordTable[maxI][1]} очк.`;
             recordTable[maxI] = 0;
 
             console.log(recordTable);
             console.log(max);
 
-            let li = document.createElement('li'),
-                span = document.createElement('span');
-
-            span.classList.add("raiting__name");
-            span.classList.add("raiting__name_js");
-            span.innerText = LeaderName;
-            li.append(span);
-            raitingList.append(li);
+            addLeaderName(raitingList, LeaderName);
 
             j++;
         }
 
     }
+
+
+    return;
 }
+
+function addLeaderName(raitingList, LeaderName){
+    let li = document.createElement('li'),
+        span = document.createElement('span');
+
+    span.classList.add("raiting__name");
+    span.classList.add("raiting__name_js");
+    span.innerText = LeaderName;
+    li.append(span);
+    raitingList.append(li);
+
+    return;
+}
+
+function checkRecordTable(recordTable){
+    let count = recordTable.length,
+        i = 3,
+        arNull = Array('',0);
+
+    if(count>=3) return recordTable;
+
+    count = 3-recordTable.length;
+    while(i>=count){
+
+        recordTable.push(arNull);
+
+        i--;
+    }
+
+    return recordTable;
+}
+
+function checkLives(){
+    let countLives = localStorage.getItem("lives");
+    if(!countLives)
+        localStorage.setItem("lives", 3);
+
+    return countLives;
+}
+
+function editLives(count){
+    if(!count) return;
+
+    localStorage.setItem("lives", Number(localStorage.getItem("lives"))+count);
+}
+
+function drawLives(hearthParent, countLives){
+    let arrSvg = hearthParent.querySelectorAll("svg");
+    arrSvg.forEach(el => {
+        el.style.fill = "black";
+    });
+    arrSvg.forEach(el => {
+        if(countLives>0){
+            el.style.fill = "red";
+
+            countLives--;
+        }else{
+            return;
+        }
+    });
+}
+
+}
+

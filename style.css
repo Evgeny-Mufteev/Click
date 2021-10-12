@@ -144,4 +144,13 @@ body{
     flex-direction: column;
 }
 
+.live-hearth{
+    width: max-content;
+    margin: 0 auto;
+}
+
+/* .live-hearth svg{
+    fill:red;
+} */
+
 /*============================== End Trauvel Styles =============================*/
