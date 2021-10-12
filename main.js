@@ -196,5 +196,4 @@ function drawLives(hearthParent, countLives){
     });
 }
 
-}
 
