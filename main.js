@@ -131,6 +131,7 @@ function recordTablePull(raitingList){
 
     }
 
+
     return;
 }
 
@@ -194,3 +195,6 @@ function drawLives(hearthParent, countLives){
         }
     });
 }
+
+}
+
