@@ -20,6 +20,19 @@ let objPhrases = {
 
 recordTablePull(raitingList);
 
+let buttonOpenList = document.querySelector(".background-menu__title_js"),
+    menuList = document.querySelector(".background-menu__list_js"),
+    menuElement = document.querySelectorAll(".background-menu__element_js");
+
+buttonOpenList.addEventListener("click", () => openList(menuList));
+menuElement.forEach(el => {
+    el.addEventListener("click", () => switchBackground(el));
+
+    let backgroundColor = el.getAttribute("data-color");
+    if(backgroundColor)
+        el.style.background = backgroundColor;
+});
+
 button.onclick = start;
 
 function start() {
@@ -105,9 +118,6 @@ function recordTablePull(raitingList){
             let LeaderName = `${recordTable[maxI][0]} ${recordTable[maxI][1]} очк.`;
             recordTable[maxI] = 0;
 
-            console.log(recordTable);
-            console.log(max);
-
             addLeaderName(raitingList, LeaderName);
 
             j++;
@@ -143,4 +153,22 @@ function checkRecordTable(recordTable){
     }
 
     return recordTable;
+}
+
+function openList(list){
+    if(!list) return;
+    
+    console.log("click");
+
+    list.classList.toggle("noDisplay");
+}
+
+function switchBackground(element){
+    if(!element) return;
+
+    let color = element.getAttribute("data-color");
+
+    if(!color) return;
+
+    document.body.style.background = color;
 }
