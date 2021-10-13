@@ -144,6 +144,7 @@ body{
     flex-direction: column;
 }
 
+
 .background-menu{
     position: absolute;
     top: 0;
@@ -177,4 +178,11 @@ body{
 .noDisplay{
     display: none;
 }
+
+.live-hearth{
+    width: max-content;
+    margin: 0 auto;
+}
+
+
 /*============================== End Trauvel Styles =============================*/

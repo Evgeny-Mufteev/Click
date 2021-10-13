@@ -1,4 +1,4 @@
-let clicks = 31;
+let clicks = 0;
 
 const TIMEOUT = 5000;
 
@@ -7,7 +7,8 @@ const display = document.querySelector('#display'),
       counter = document.querySelector('#counter'),
       restart = document.querySelector(".restart_js"),
       raitingList = document.querySelector(".raiting__list_js"),
-      cryPhraseBlock = document.querySelector(".cryPhrase_js");
+      cryPhraseBlock = document.querySelector(".cryPhrase_js"),
+      liveHearth = document.querySelector(".live-hearth");
  
 let objPhrases = {
         0: "Так не работает!",
@@ -15,10 +16,20 @@ let objPhrases = {
         20: "Плохо!",
         30: "Не плохо!",
         40: "Приемлимо!",
-        50: "Нормально"
+        50: "Нормально!"
     };
 
 recordTablePull(raitingList);
+checkLives();
+drawLives(liveHearth, checkLives());
+
+if(checkLives()!=0){
+    button.onclick = start;
+}else{
+    button.innerText = "Посмотреть рекламу!";
+}
+
+
 
 let buttonOpenList = document.querySelector(".background-menu__title_js"),
     menuList = document.querySelector(".background-menu__list_js"),
@@ -35,13 +46,20 @@ menuElement.forEach(el => {
 
 button.onclick = start;
 
+
 function start() {
+    let audio = document.querySelector("#audioClick_js");
+
     const startTime = Date.now();
  
     counter.textContent = clicks;
 
     display.textContent = formatTime(TIMEOUT);
-    button.onclick = () => counter.textContent = ++clicks;
+    button.onclick = () => {
+        console.log(audio);
+        counter.textContent = ++clicks;
+        audio.play();
+    }
 
     const interval = setInterval(() => {
         const delta  = Date.now() - startTime;
@@ -49,6 +67,10 @@ function start() {
     }, 100);
 
     const timeout = setTimeout(() => {
+        editLives(-1);
+        drawLives(liveHearth, checkLives());
+
+
         button.onclick = null;
 
         let cryPhrase = '';
@@ -79,9 +101,6 @@ function start() {
             recordTablePull(raitingList);
         });
         
-
-
-
         clearInterval(interval)
         clearTimeout(timeout);
     }, TIMEOUT);
@@ -124,6 +143,9 @@ function recordTablePull(raitingList){
         }
 
     }
+
+
+    return;
 }
 
 function addLeaderName(raitingList, LeaderName){
@@ -135,6 +157,8 @@ function addLeaderName(raitingList, LeaderName){
     span.innerText = LeaderName;
     li.append(span);
     raitingList.append(li);
+
+    return;
 }
 
 function checkRecordTable(recordTable){
@@ -155,6 +179,7 @@ function checkRecordTable(recordTable){
     return recordTable;
 }
 
+
 function openList(list){
     if(!list) return;
     
@@ -172,3 +197,35 @@ function switchBackground(element){
 
     document.body.style.background = color;
 }
+
+function checkLives(){
+    let countLives = localStorage.getItem("lives");
+    if(!countLives)
+        localStorage.setItem("lives", 3);
+
+    return countLives;
+}
+
+function editLives(count){
+    if(!count) return;
+
+    localStorage.setItem("lives", Number(localStorage.getItem("lives"))+count);
+}
+
+function drawLives(hearthParent, countLives){
+    let arrSvg = hearthParent.querySelectorAll("svg");
+    arrSvg.forEach(el => {
+        el.style.fill = "black";
+    });
+    arrSvg.forEach(el => {
+        if(countLives>0){
+            el.style.fill = "red";
+
+            countLives--;
+        }else{
+            return;
+        }
+    });
+}
+
+
