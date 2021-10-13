@@ -18,7 +18,7 @@ let objPhrases = {
         40: "Приемлимо!",
         50: "Нормально!"
     };
-
+ 
 recordTablePull(raitingList);
 checkLives();
 drawLives(liveHearth, checkLives());
