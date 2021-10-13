@@ -144,13 +144,45 @@ body{
     flex-direction: column;
 }
 
+
+.background-menu{
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+}
+
+.background-menu__title{
+    padding: 5px;
+    border:1px solid;
+    cursor: pointer;
+    background: white;
+    color:black;
+} 
+
+.background-menu__list{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.background-menu__element{
+    width: 40px;
+    height: 40px;
+    border:1px solid black;
+    border-radius: 15px;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+.noDisplay{
+    display: none;
+}
+
 .live-hearth{
     width: max-content;
     margin: 0 auto;
 }
 
-/* .live-hearth svg{
-    fill:red;
-} */
 
 /*============================== End Trauvel Styles =============================*/
